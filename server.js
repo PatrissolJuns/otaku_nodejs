@@ -26,13 +26,20 @@ const router = express.Router();
 
 // this is our MongoDB database
 // connects our back end code with the database
-mongoose.connect(process.env.MONGO_DB_URL, function(err){
+/*mongoose.connect(process.env.MONGO_DB_URL, function(err){
     if(err){
         console.log('Error connecting to: '+ process.env.MONGO_DB_URL)
     }
     else{
         console.log('Connected to: '+ process.env.MONGO_DB_URL)
     }
+});*/
+
+mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/url_shortner').then(() => {
+    console.log('Connected to mongoDB');
+}).catch(e => {
+    console.log('Error while DB connecting');
+    console.log(e);
 });
 
 // (optional) only made for logging and
@@ -54,7 +61,7 @@ router.use('/playlist', playlistRoutes);
 app.use('/api', router);
 
 //
-app.use('/', function (req, res, next){
+app.use('/', function (req, res){
     res.status(200).json({
         message: 'hello This is the backend app'
     });
