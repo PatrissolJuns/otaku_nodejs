@@ -79,7 +79,8 @@ exports.addVideo = (req, res, next) => {
             viewCount: videoFormReq.statistics.viewCount,
         },
         tags: videoFormReq.tags,
-        title: videoFormReq.title
+        title: videoFormReq.title,
+        youtubeId: videoFormReq.youtubeId
     });
 
     // Save the video to the database

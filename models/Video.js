@@ -18,7 +18,8 @@ const VideoSchema = new mongoose.Schema({
         viewCount: Number,
     },
     tags: [{type:String}],
-    title: String
+    title: String,
+    youtubeId: String
     /*thumbnails: {
         high: {
             height: Number,
