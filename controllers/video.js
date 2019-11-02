@@ -1,7 +1,6 @@
 const Video = require('../models/Video');
 
 exports.getAllVideo = (req, res, next) => {
-    console.log('indie');
     Video.find().then(
         (videos) => {
             console.log('videos = ',videos);
@@ -49,39 +48,73 @@ exports.getFromDBVideos = () => {
         .catch( (error) => {return null;});
 }
 
+/**
+ * This function adds a new video to the database
+ * It require that the video params should be a JSON stringify
+ *
+ * @param req
+ * @param res
+ * @param next
+ */
 exports.addVideo = (req, res, next) => {
+    // Get the video form the params
+    let videoFormReq = JSON.parse(req.body.video);
+
+    // Create a new Video item
     const video = new Video({
-        name: req.body.name,
-        description: req.body.description,
-        isBookmarked: req.body.isBookmarked,
-        publishAt: req.body.publishAt,
-        statistic: {
-            commentCount: req.body.statistic.commentCount,
-            dislikeCount: req.body.statistic.dislikeCount,
-            favoriteCount: req.body.statistic.favoriteCount,
-            likeCount: req.body.statistic.likeCount,
-            viewCount: req.body.statistic.viewCount,
-        },
-        tags: req.body.tags,
-        title: req.body.tags,
+        duration: videoFormReq.duration,
+        description: videoFormReq.description,
         image: {
-            height: req.body.image.height,
-            url: req.body.image.url,
-            width: req.body.image.width
-        }
+            height: videoFormReq.image.height,
+            url: videoFormReq.image.url,
+            width: videoFormReq.image.width
+        },
+        isBookmarked: videoFormReq.isBookmarked,
+        publishedAt: videoFormReq.publishedAt,
+        statistics: {
+            commentCount: videoFormReq.statistics.commentCount,
+            dislikeCount: videoFormReq.statistics.dislikeCount,
+            favoriteCount: videoFormReq.statistics.favoriteCount,
+            likeCount: videoFormReq.statistics.likeCount,
+            viewCount: videoFormReq.statistics.viewCount,
+        },
+        tags: videoFormReq.tags,
+        title: videoFormReq.title
     });
+
+    // Save the video to the database
     video.save().then(
         (video) => {
-            console.log("video = ",video);
             res.status(201).json(video);
         }
     ).catch(
         (error) => {
+            console.log('error = ', error);
             res.status(400).json({
                 error: error
             });
         }
     );
+};
+
+/**
+ * Toggle the isBookmarked attribute
+ * @param req
+ * @param res
+ * @param next
+ * @returns {Promise<void>}
+ */
+exports.toggleIsBookmarked = async (req, res, next) => {
+    let video = await this.getFromDBOneVideo(req.body.id);
+
+    Video.updateOne({_id: req.body.id}, {isBookmarked: !video.isBookmarked}).then(
+        async () => {
+            res.status(200).json({
+                message: 'video updated successfully!',
+                isBookmarked: (await this.getFromDBOneVideo(req.body.id)).isBookmarked,
+            });
+        }
+    )
 }
 
 /*exports.updateVideo = async (req, res, next) => {

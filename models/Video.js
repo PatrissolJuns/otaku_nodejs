@@ -3,22 +3,22 @@ const mongoose = require('mongoose');
 const VideoSchema = new mongoose.Schema({
     duration: String,
     description: String,
+    image: {
+        height: Number,
+        url: String,
+        width: Number
+    },
     isBookmarked: Boolean,
-    publishAt: String,
-    statistic: {
+    publishedAt: String,
+    statistics: {
         commentCount: Number,
         dislikeCount: Number,
         favoriteCount: Number,
         likeCount: Number,
         viewCount: Number,
     },
-    tags: [String],
-    title: String,
-    image: {
-        height: Number,
-        url: String,
-        width: Number
-    }
+    tags: [{type:String}],
+    title: String
     /*thumbnails: {
         high: {
             height: Number,
