@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/PatrissolJuns/juns-digital-library-nodejs.git"
+    "url": "git+https://github.com/PatrissolJuns/otaku_nodejs.git"
   },
   "keywords": [
     "react",
@@ -20,9 +20,9 @@
   "author": "Patrissol Kenfack",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/PatrissolJuns/juns-digital-library-nodejs/issues"
+    "url": "https://github.com/PatrissolJuns/otaku_nodejs.git/issues"
   },
-  "homepage": "https://github.com/PatrissolJuns/juns-digital-library-nodejs",
+  "homepage": "https://github.com/PatrissolJuns/otaku_nodejs.git",
   "dependencies": {
     "atob": "^2.1.2",
     "body-parser": "^1.19.0",

@@ -9,19 +9,20 @@ const app = express();
 
 const audioRoutes = require('./routes/audio');
 const playlistRoutes = require('./routes/playlist');
+const videoRoutes = require('./routes/video');
 // const folderRoutes = require('./routes/folder');
 const path = require('path');
 
 require('dotenv').config();
 
 
-/*app.use(function(req, res, next) {
+app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
-});*/
+});
 
-app.use(cors());
+// app.use(cors());
 const router = express.Router();
 
 // this is our MongoDB database
@@ -35,7 +36,7 @@ const router = express.Router();
     }
 });*/
 
-mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/url_shortner').then(() => {
+mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/otaku').then(() => {
     console.log('Connected to mongoDB');
 }).catch(e => {
     console.log('Error while DB connecting');
@@ -53,8 +54,9 @@ app.use('/file/audios', express.static(path.join(__dirname, '/Storage/audios')))
 app.use('/file/images', express.static(path.join(__dirname, '/Storage/images')));
 
 // Setting general model route
-router.use('/audio', audioRoutes);
-router.use('/playlist', playlistRoutes);
+/*router.use('/audio', audioRoutes);
+router.use('/playlist', playlistRoutes);*/
+router.use('/video', videoRoutes);
 // router.use('/folder', folderRoutes);
 
 // append /api for our http requests
